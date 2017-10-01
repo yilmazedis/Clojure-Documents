@@ -2,12 +2,12 @@
    (:gen-class))
 
 (defn lines []
-   (with-open [rdr (clojure.java.io/reader "document2.txt")]
+   (with-open [rdr (clojure.java.io/reader "dictionary1.txt")]
    (reduce conj [] (line-seq rdr))))
  
- (println (nth (clojure.string/split (nth (lines) 0) #" ") 2))
- (def x (clojure.string/split (nth (lines) 0) #" "))
- (println (count x))
+ ;(println (nth (clojure.string/split (nth (lines) 0) #" ") 2))
+ ;(def x (clojure.string/split (nth (lines) 0) #" "))
+ ;(println (count x))
  
  (defn TraceWords []
    (def words (lines))
