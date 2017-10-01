@@ -1,5 +1,7 @@
 (ns clojure.examples.hello
    (:gen-class))
+ 
+ (import java.util.ArrayList)
 
 (defn lines []
    (with-open [rdr (clojure.java.io/reader "dictionary1.txt")]
@@ -10,6 +12,12 @@
  ;(println (count x))
  
  (defn TraceWords []
+   
+   (println (.charAt "yilmaz" 3))
+   (println (.toString 23234))
+   (println (java.util.ArrayList. (lines
+                                    )))
+   
    (def words (lines))
    (def wordNum (count words))
    ;(println wordNum)
@@ -20,6 +28,7 @@
    (println "\nline size --->>>> " totalWord)
    (dotimes [nm totalWord]
    (def newWord (clojure.string/split (nth singleLine nm) #" "))
+   
    (println newWord))))
  
  (TraceWords)
