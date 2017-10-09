@@ -19,30 +19,28 @@
 
 	(let [] newList))
 
-;(println (mkList (readFile "document1.txt")))
-;(println (mkList (readFile "dictionary1.txt")))
+;(println "\nDocuments")
+;(println (mkList (readFile "mydocument.txt")))
+;(println "\nDictionary")
+;(println (mkList (readFile "mydictionary.txt")))
 
 (defn matchWords [w1 w2]
   (def matched 0)
   (def len_w1 (count w1))
   (def len_w2 (count w2))
   (dotimes [n1 len_w1]
+  	
       (dotimes [n2 len_w2]
-          (if (= (nth w1 n1) (nth w2 n2)) (def matched (inc matched)))))
-  (let [] matched))
+      	  
+          (if (= (nth w1 n1) (nth w2 n2)) 
+          	(if (= (count (nth w1 n1)) (count (nth w2 n2))) 
+          		(println (nth w2 n2))))))
+  
+  ;matched
+  )
 
-;(println (matchWords (mkList (readFile "document2.txt")) (mkList (readFile "dictionary1.txt"))))
+(println (matchWords (mkList (readFile "dictionary2.txt")) (mkList (readFile "document1.txt"))))
 
-(defn ints-from [n]
-(cons n (lazy-seq (ints-from (dec n)))))
-
-;(println (reverse (take 5 (ints-from 5))))
-;(println (reverse (take 4 (ints-from 5))))
-;(println (reverse (take 3 (ints-from 5))))
-;(println (reverse (take 2 (ints-from 5))))
-
-
-;(println (distinct [1 2 3 4 4 1 1]))
 
 (defn tail [listTail] 
 	(def tailList (list))
@@ -69,7 +67,8 @@
 	)
 
 (defn concatMapList [mySeq]
-	(distinct (map concat  (tail mySeq)  (init mySeq) )))
+	(distinct (map concat  (tail mySeq)  (init mySeq) ))
+	)
 
 ;(println "init" (init (list 0 1 2 3 4)))
 
@@ -80,8 +79,70 @@
 (defn permutations [perm-set]
   (if (empty? perm-set)
     (list ())
-    (mapcat
-     (fn [[x & xs]] (map #(cons x %) (permutations xs)))
-     (concatMapList perm-set))))
+    (apply concat (map
+     (fn [[x & xs]]
+     	(map (fn [y] 
+     		(cons x y)) 
+     			(permutations xs)))
+     (concatMapList perm-set)))))
 
- (println (permutations (list 1 2 3)))
+(defn findIndex [ch] 
+	(def alfabe (list "e" "a" "n"))
+	(.indexOf alfabe ch))
+
+(defn decodeWithBruteForce []
+	(def alfabe (list "e" "a" "n"))
+ 	(def bigList (permutations alfabe))
+ 	(def lenBigList (count bigList))
+ 	(def encodedDocument (mkList (readFile "mydocument.txt")))
+ 	(def tempListDis (list))
+ 	
+ 	(dotimes [n lenBigList]
+ 		;(println bigList)
+ 		(def temp (nth bigList n))
+ 		(println temp)
+
+ 		(dotimes [n1 (count encodedDocument)]
+
+ 			(def enDocInnList (nth encodedDocument n1))
+
+ 			(def tempList (list))
+ 			
+ 			(dotimes [n2 (count enDocInnList)]
+
+ 				(def ch (str (nth enDocInnList n2) ""))
+
+ 				(def in (findIndex ch))
+
+
+
+ 				(def tempList (cons (nth temp in) tempList))
+
+ 				;(println tempList)
+ 			)
+ 		)
+
+ 		(def tempListDis (cons tempList tempListDis))
+ 		;(println tempListDis)
+
+ 	)
+
+ 	;(println tempListDis)
+	;(println "\nlenUpList --> " lenBigList)
+	;(println alfabe)
+
+	tempListDis
+)
+
+;(println (decodeWithBruteForce))
+
+;(println (matchWords (mkList (readFile "mydictionary.txt")) (decodeWithBruteForce)))
+
+;(println (deneme "n"))
+
+;"m" "e" "r" "h" "a" "b" "n"
+ ; "a" "b" "c" "d" "e" "f" "g" 
+ ; "h" "i" "j" "k" "l" "m" "n" 
+ ; "o" "p" "q" "r" "s" "t" "u" 
+ ; "v" "w" "x" "y" "z"
+
